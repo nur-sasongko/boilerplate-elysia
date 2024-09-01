@@ -1,0 +1,24 @@
+services:  # Define the services that will be managed by Docker Compose.
+  app:
+    image: "oven/bun"  # The Docker image to use for the app service, using Bun as the runtime.
+    entrypoint: []  # Override the default entrypoint to allow custom commands.
+    command: "/bin/sh -c 'bun install && bun run --watch src/index.ts'"  # Run the Bun install command to install dependencies, then start the server in watch mode to reload on changes.
+    ports: ["3000:3000"]  # Map port 3000 on the host to port 3000 in the container, making the app accessible at http://localhost:3000.
+    volumes: ["./:/home/bun/app"]  # Mount the current directory (./) on the host to /home/bun/app in the container, allowing code changes to be reflected in the container.
+    env_file: ".env"  # Load environment variables from the .env file and pass them to the app service.
+    depends_on:
+      - db  # Ensure that the db service starts before the app service.
+
+  db:
+    image: "postgres:latest"  # The Docker image to use for the db service, using the latest version of PostgreSQL.
+    ports: 
+      - "5432:5432"  # Map port 5432 on the host to port 5432 in the container, making the database accessible at localhost:5432.
+    environment: # Set environment variables for the PostgreSQL container, including the database name, user, and password.
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - boilerplate-elysia:/var/lib/postgresql/data  # Persist the database data by mounting a named volume (boilerplate-elysia) to the PostgreSQL data directory.
+
+volumes:
+  boilerplate-elysia:  # Define a named volume (boilerplate-elysia) for persisting PostgreSQL data, ensuring data is not lost when the container is stopped or removed.
