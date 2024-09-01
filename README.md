@@ -29,7 +29,7 @@ docker-compose up
 # Migration
 Run migration to create the database schema:
 ```bash
-bunx prisma migrate dev --name init
+bunx prisma migrate dev
 ```
 
 ## Stop the Application
