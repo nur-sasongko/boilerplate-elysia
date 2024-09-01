@@ -26,6 +26,12 @@ To get started with this boilerplate, follow the steps below:
 docker-compose up
 ```
 
+# Migration
+Run migration to create the database schema:
+```bash
+bunx prisma migrate dev --name init
+```
+
 ## Stop the Application
 To stop the application, run the following command:
 ```bash
