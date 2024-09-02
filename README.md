@@ -20,26 +20,29 @@ This Bun.js boilerplate provides a foundation for building robust web applicatio
 
 # Getting Started
 
-## Run the Application
+## First Installation
+
+### Install App with Docker Compose
 To get started with this boilerplate, follow the steps below:
 ```bash
-docker-compose up
+docker compose up
 ```
 
-# Migration
+### Run Migration
 Run migration to create the database schema:
 ```bash
+docker exec -it web_service bash
 bunx prisma migrate dev
 ```
 
 ## Stop the Application
 To stop the application, run the following command:
 ```bash
-docker-compose down
+docker compose down
 ```
 
 ## Stop and Remove Volumes
 To stop the application and remove the volumes, run the following command:
 ```bash
-docker-compose down -v
+docker compose down -v
 ```
