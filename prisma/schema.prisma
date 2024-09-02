@@ -13,8 +13,8 @@ model User {
   email     String   @unique
   name      String?
   password  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now()) @db.Timestamptz
+  updatedAt DateTime @updatedAt @db.Timestamptz
 
   @@map("users")
 }
@@ -23,8 +23,8 @@ model Post {
   id        Int      @id @default(autoincrement())
   title     String   @db.VarChar(255)
   content   String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now()) @db.Timestamptz
+  updatedAt DateTime @updatedAt @db.Timestamptz
 
   @@map("posts")
 }

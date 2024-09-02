@@ -2,8 +2,10 @@
   "name": "app",
   "version": "1.0.50",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "bun run --watch src/index.ts"
+    "dev": "bun run --watch src/index.ts",
+    "db:migrate": "bun prisma migrate dev",
+    "db:seed": "bun run ./prisma/seeder/seed.ts",
+    "db:reset": "bun prisma migrate reset"
   },
   "dependencies": {
     "@elysiajs/swagger": "^1.1.1",

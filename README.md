@@ -28,11 +28,12 @@ To get started with this boilerplate, follow the steps below:
 docker compose up
 ```
 
-### Run Migration
+### Run Migration && Seed
 Run migration to create the database schema:
 ```bash
 docker exec -it web_service bash
-bunx prisma migrate dev
+bun run db:migrate
+bun run db:seed
 ```
 
 ## Stop the Application
