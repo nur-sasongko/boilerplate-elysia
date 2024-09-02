@@ -1,11 +1,10 @@
 import { Elysia } from "elysia";
 
 import Routes from "./routes";
-import { getPosts } from "./controllers/PostController";
 
 const app = new Elysia()
   .get("/", () => `Welcome to a ${Bun.env.APP_NAME}`)
-  .get("/api/posts",  () => getPosts())
+  .group("/api", (app) => app.use(Routes))
   .listen(Bun.env.APP_PORT as string);
 
 console.log(
