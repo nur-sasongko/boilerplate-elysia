@@ -1,6 +1,6 @@
 {
-  "name": "app",
-  "version": "1.0.50",
+  "name": "boilerplate-elysia",
+  "version": "1.0.0",
   "scripts": {
     "dev": "bun run --watch src/index.ts",
     "db:migrate": "bun prisma migrate dev",
@@ -16,5 +16,5 @@
     "bun-types": "latest",
     "prisma": "^5.19.0"
   },
-  "module": "src/index.js"
+  "module": "src/index.ts"
 }
