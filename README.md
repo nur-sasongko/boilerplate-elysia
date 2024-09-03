@@ -37,6 +37,12 @@ bun run db:migrate
 bun run db:seed
 ```
 
+### Open the API Documentation
+[Open the documentation in your browser](http://localhost:8000/docs).
+
+Note:
+- The default port for the application is `8000`.
+
 ## Stop the Application
 To stop the application, run the following command:
 ```bash
