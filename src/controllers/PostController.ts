@@ -1,29 +1,28 @@
-//import prisma client
+import { errorResponse, successResponse } from "@/libs/ResponseFormatter";
 import prisma from "../../prisma/client";
 
 /**
  * Getting all posts
  */
-export async function getPosts() {
+export const getPosts = async () => {
   try {
-    //get all posts
     const posts = await prisma.post.findMany({ orderBy: { id: "desc" } });
 
-    //return response json
-    return {
-      success: true,
-      message: "List Data Posts!",
-      data: posts,
-    };
+    if (!posts) {
+      return errorResponse(null, "Posts Not Found!", 404);
+    }
+
+    return successResponse(posts, "List Data Posts!", 200);
   } catch (e: unknown) {
     console.error(`Error getting posts: ${e}`);
+    return errorResponse(e, "Error getting posts", 500);
   }
 }
 
 /**
  * Getting a post by ID
  */
-export async function getPostById(id: string) {
+export const getPostById = async (id: string) => {
   try {
     // Konversi tipe id menjadi number
     const postId = parseInt(id);
@@ -35,28 +34,20 @@ export async function getPostById(id: string) {
 
     //if post not found
     if (!post) {
-      return {
-        sucess: true,
-        message: "Detail Data Post Not Found!",
-        data: null,
-      };
+      return errorResponse(null, "Post Not Found!", 404);
     }
 
-    //return response json
-    return {
-      success: true,
-      message: `Detail Data Post By ID : ${id}`,
-      data: post,
-    };
+    return successResponse(post, `Detail Data Post By ID : ${id}`, 200);
   } catch (e: unknown) {
-    console.error(`Error finding post: ${e}`);
+    console.error(`Error getting post by id: ${e}`);
+    return errorResponse(e, "Error getting post by id", 500);
   }
 }
 
 /**
  * Creating a post
  */
-export async function createPost(options: { title: string; content: string }) {
+export const createPost = async (options: { title: string; content: string }) => {
   try {
     //get title and content
     const { title, content } = options;
@@ -69,24 +60,20 @@ export async function createPost(options: { title: string; content: string }) {
       },
     });
 
-    //return response json
-    return {
-      success: true,
-      message: "Post Created Successfully!",
-      data: post,
-    };
+    return successResponse(post, "Post Created Successfully!", 201);
   } catch (e: unknown) {
     console.error(`Error creating post: ${e}`);
+    return errorResponse(e, "Error creating post", 500);
   }
 }
 
 /**
  * Updating a post
  */
-export async function updatePost(
+export const updatePost = async (
   id: string,
   options: { title?: string; content?: string }
-) {
+) => {
   try {
     // Konversi tipe id menjadi number
     const postId = parseInt(id);
@@ -103,24 +90,30 @@ export async function updatePost(
       },
     });
 
-    //return response json
-    return {
-      success: true,
-      message: "Post Updated Successfully!",
-      data: post,
-    };
+    return successResponse(post, "Post Updated Successfully!", 200);
+
   } catch (e: unknown) {
     console.error(`Error updating post: ${e}`);
+    return errorResponse(e, "Error updating post", 500);
   }
 }
 
 /**
  * Deleting a post
  */
-export async function deletePost(id: string) {
+export const deletePost = async (id: string) => {
   try {
-    // Konversi tipe id menjadi number
     const postId = parseInt(id);
+
+    //get post by id
+    const post = await prisma.post.findUnique({
+      where: { id: postId },
+    });
+
+    //if post not found
+    if (!post) {
+      return errorResponse(null, "Post Not Found!", 404);
+    }
 
     //delete post with prisma
     await prisma.post.delete({
@@ -128,11 +121,9 @@ export async function deletePost(id: string) {
     });
 
     //return response json
-    return {
-      success: true,
-      message: "Post Deleted Successfully!",
-    };
+    return successResponse(null, "Post Deleted Successfully!", 200);
   } catch (e: unknown) {
     console.error(`Error deleting post: ${e}`);
+    return errorResponse(e, "Error deleting post", 500);
   }
 }
