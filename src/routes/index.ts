@@ -10,11 +10,20 @@ import {
 } from "@/controllers/PostController";
 
 const Routes = new Elysia({ prefix: "/posts" })
-  .get("/", () => getPosts())
+  .get("/", () => getPosts(), {
+    detail: {
+      summary: "Get all posts",
+      tags: ["Posts"],
+    },
+  })
   .get("/:id", ({ params: { id } }) => getPostById(id), {
     params: t.Object({
       id: t.String(),
     }),
+    detail: {
+      summary: "Get a post by ID",
+      tags: ["Posts"],
+    },
   })
   .post(
     "/",
@@ -30,7 +39,11 @@ const Routes = new Elysia({ prefix: "/posts" })
           maxLength: 1000,
         }),
       }),
-    }
+      detail: {
+        summary: "Create a post",
+        tags: ["Posts"],
+      }
+    },
   )
   .patch(
     "/:id",
@@ -50,12 +63,20 @@ const Routes = new Elysia({ prefix: "/posts" })
           maxLength: 1000,
         }),
       }),
+      detail: {
+        summary: "Update a post by ID",
+        tags: ["Posts"],
+      }
     }
   )
   .delete("/:id", ({ params: { id } }) => deletePost(id), {
     params: t.Object({
       id: t.String(),
     }),
+    detail: {
+      summary: "Delete a post by ID",
+      tags: ["Posts"],
+    },
   });
 
 export default Routes;

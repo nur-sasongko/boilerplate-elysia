@@ -8,7 +8,12 @@ const app = new Elysia()
   .use(swagger({
     path: "/docs",
   }))
-  .get("/", () => checkHealth())
+  .get("/", ({}) => checkHealth(), {
+    detail: {
+      summary: "Check health of the server",
+      tags: ["Check Health"],
+    }
+  })
   .group("/api", (app) => app.use(Routes))
   .listen(Bun.env.APP_PORT as string);
 
