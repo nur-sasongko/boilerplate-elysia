@@ -17,6 +17,7 @@ This Bun.js boilerplate provides a foundation for building robust web applicatio
 - **Docker**: For containerized development and deployment
 - **Docker Compose**: For running the application with Docker
 - **PostgreSQL**: If using the default database setup
+- **Prisma**: For database schema management
 
 # Getting Started
 
@@ -46,4 +47,19 @@ docker compose down
 To stop the application and remove the volumes, run the following command:
 ```bash
 docker compose down -v
+```
+
+# Project Structure
+Here's the recommended file structure for Elysia if you don't strictly prefer a specific convention:
+```
+prisma/             # Prisma configuration and schema files
+src/                # Development files for the Elysia server
+  ├── controllers/  # Instances encapsulating multiple endpoints
+  ├── libs/         # Utility functions
+  ├── models/       # Data Type Objects (DTOs) for Elysia instance
+  ├── routes/       # Route configurations for the Elysia server
+  ├── types/        # Shared TypeScript types
+  ├── index.ts      # Entry point for the Elysia server, ideal for setting global plugins
+  └── setup.ts      # Composed of various plugins to be used as a Service Locator
+test/               # Test files for the Elysia server
 ```
