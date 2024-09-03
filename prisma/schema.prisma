@@ -13,6 +13,7 @@ model User {
   email     String   @unique
   name      String?
   password  String
+  activeAt  DateTime? @db.Timestamptz
   createdAt DateTime @default(now()) @db.Timestamptz
   updatedAt DateTime @updatedAt @db.Timestamptz
 
